@@ -15,9 +15,12 @@
         android:theme="@style/Theme.UserRegister"
         tools:targetApi="31">
         <activity
+            android:name=".ForgetActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignupActivity"
             android:exported="false"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -30,14 +33,14 @@
         <activity
             android:name=".UpdateUserActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddUserActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
