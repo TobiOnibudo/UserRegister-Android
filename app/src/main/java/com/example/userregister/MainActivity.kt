@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
     private val userList = ArrayList<Users>()
     private lateinit var usersAdapter: UsersAdapter
+
+    val firebaseStorage : FirebaseStorage = FirebaseStorage.getInstance()
+    val storageReference : StorageReference = firebaseStorage.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,13 @@ class MainActivity : AppCompatActivity() {
                   val id = usersAdapter.getUserId(viewHolder.adapterPosition)
 
                 myReference.child(id).removeValue()
+
+                //delete()
+                val imageName = usersAdapter.getImageName(viewHolder.adapterPosition)
+
+                val imageReference = storageReference.child("images").child(imageName)
+
+                imageReference.delete()
 
                 Toast.makeText(applicationContext,"The user has been deleted",Toast.LENGTH_SHORT).show()
             }
