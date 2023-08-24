@@ -13,7 +13,6 @@
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_margin="5dp"
-        android:src="@tools:sample/avatars"
         app:srcCompat="@drawable/account_box" />
 
     <TextView

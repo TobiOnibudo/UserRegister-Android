@@ -102,7 +102,7 @@ class AddUserActivity : AppCompatActivity() {
 
     }
 
-    fun addUserToDatabase(url : String)
+    fun addUserToDatabase(url : String,imageName : String)
     {
         val name : String = addUserBinding.editTextName.text.toString()
         val age : Int = addUserBinding.editTextAge.text.toString().toInt()
@@ -110,7 +110,7 @@ class AddUserActivity : AppCompatActivity() {
 
         val id : String = myReference.push().key.toString()
 
-        val user = Users(id,name,age,email,url)
+        val user = Users(id,name,age,email,url,imageName)
 
         myReference.child(id).setValue(user).addOnCompleteListener {
             task->
@@ -152,7 +152,7 @@ class AddUserActivity : AppCompatActivity() {
                 myUploadedImageReference.downloadUrl.addOnSuccessListener { url->
                     val imageURL  = url.toString()
 
-                    addUserToDatabase(imageURL)
+                    addUserToDatabase(imageURL,imageName)
                 }
             }.addOnFailureListener{
                 Toast.makeText(applicationContext,it.localizedMessage,Toast.LENGTH_SHORT).show()
