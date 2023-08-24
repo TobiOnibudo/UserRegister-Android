@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val myReference : DatabaseReference  = database.reference.child("MyUsers")
 
     private val userList = ArrayList<Users>()
+    private val imageNameList = ArrayList<String>()
     private lateinit var usersAdapter: UsersAdapter
 
     val firebaseStorage : FirebaseStorage = FirebaseStorage.getInstance()
@@ -146,9 +147,35 @@ class MainActivity : AppCompatActivity() {
         })
 
         dialogMessage.setPositiveButton("Yes",DialogInterface.OnClickListener { dialogInterface, i ->
+            myReference.addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for( eachUser in snapshot.children) {
+                        val user = eachUser.getValue(Users::class.java)
+
+                        if (user != null) {
+                            imageNameList.add(user.imageName)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
+            val imageReference = storageReference.child("images")
+            imageReference.delete()
+
             myReference.removeValue().addOnCompleteListener { task->
                 if(task.isSuccessful)
                 {
+
+                    for (imageName in imageNameList)
+                    {
+                        val imageReference = storageReference.child("images").child(imageName)
+                        imageReference.delete()
+                    }
                     usersAdapter.notifyDataSetChanged()
 
                     Toast.makeText(applicationContext,"All users were deleted",Toast.LENGTH_SHORT).show()
